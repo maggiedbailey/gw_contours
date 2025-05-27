@@ -158,7 +158,14 @@ z_lim <- range(plume_long$conc)
 
 # load result data -- manuscript has two sets of results, only one is plotted
 #   here as an example
-load("data/complex_pred_plume_network_25_100_nwells.Rds")
+load("data/")
+str(pred_df_out)
+
+# subset to 10, 20, 30, 40 ts
+pred_subset <- pred_df_out %>%
+  filter(time %in% c("ts10", "ts20", "ts30", "ts40"))
+saveRDS(pred_subset, file = "complex_pred_plume_network_25_100_nwells_subset.RDS")
+
 
 # select number of wells -- can be 15, 30, 50 75, or 100
 n_wells <- 100
@@ -205,11 +212,10 @@ pred_df_out %>%
 # example data is available for 100 wells only
 
 # load example result data directly from data folder
-df <- load_and_get_data("data/complex_pred_plume_network_25_100_nwells.Rds")
+df <- load_and_get_data("gw_contours/data/complex_pred_plume_network_25_100_nwells_subset.RDS")
 
 # get average, median, 5th, 95th contours by pixel -- these lines make take a minute to run
 df_fbplot <- df %>% 
-  filter(time %in% c("ts10", "ts20", "ts30", "ts40")) %>% # to save time
   group_by(x, y, time, pred) %>%
   summarise(
     # conc_avg = mean(conc, na.rm = TRUE),
@@ -222,7 +228,6 @@ df_fbplot <- df %>%
 
 # get true data from df and store as its on data frame
 df_true <- df %>% 
-  filter(time %in% c("ts10", "ts20", "ts30", "ts40")) %>% 
   dplyr::select(x, y, obs_conc, time) %>% 
   distinct()
 
