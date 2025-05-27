@@ -6,7 +6,7 @@ Contour maps of groundwater information, such as water levels, contamination, an
 
 ## Data
 Three datasets are available:
-- Five time steps of a groundwater plume simulated in ModFlow for example implementation with the chosen methods (complex_ts_(01-40).rds)
+- Five time steps of a groundwater plume simulated in ModFlow for example implementation with the chosen methods (complex_ts_[01-40].rds)
 - Data frame with concentration predictions for each method for plotting contours (predictions_complex_plume.RDS)
 - MSPE results for one simulated well network across all time points for 15, 30, 50, 75, and 100 wells (sim_complex_df_25_itergroup_4.RDS)
 
