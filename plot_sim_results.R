@@ -212,7 +212,7 @@ pred_df_out %>%
 # example data is available for 100 wells only
 
 # load example result data directly from data folder
-df <- load_and_get_data("gw_contours/data/complex_pred_plume_network_25_100_nwells_subset.RDS")
+df <- load_and_get_data("gw_contours/data/predictions_complex_plume.RDS")
 
 # get average, median, 5th, 95th contours by pixel -- these lines make take a minute to run
 df_fbplot <- df %>% 
