@@ -8,7 +8,6 @@ options(dplyr.summarise.inform = FALSE)
 # load libraries
 library(MASS)
 library(gstat)
-library(tidyverse); theme_set(theme_minimal())
 library(whitening)
 library(sp)
 library(fields)
@@ -16,6 +15,7 @@ library(interp)
 library(tictoc)
 library(meteo)
 library(tidyr)
+library(tidyverse); theme_set(theme_minimal())
 
 # setwd("github_repo/")
 
@@ -68,8 +68,8 @@ plume_xy <- plume_wide |> dplyr::select(x, y)
 
 # number of wells in the domain to use as observations
 well_interest <- 15 # 15, 30, 50 75, 100 but set 15 here for example
- 
-k <- 8 # number of well networks to simulate
+
+k <- 1 # number of well networks to simulate
 d <- 1:k
 x <- seq_along(d)
 max_n <- 8 # 8 networks in each rds
@@ -96,7 +96,7 @@ for (j in iter_n_names) {
         well_n_int = well_interest,
         plume_data_long = plume_long,
         plume_type = plume_type,
-        plume_data_wid = plume_wide
+        plume_data_wide = plume_wide
       )
       obj_name <- paste0("sim_", plume_type, "_df_", k,"_itergroup_", j)
       assign(obj_name, sim_df)
