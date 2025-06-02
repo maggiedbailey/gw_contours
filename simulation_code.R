@@ -17,14 +17,14 @@ library(meteo)
 library(tidyr)
 library(tidyverse); theme_set(theme_minimal())
 
-# setwd("github_repo/")
+setwd("github_repo/gw_contours/")
 
 # source functions -------------------------------------------------------------
 source("model_functions.R")
 source("inla_functions.R") # model functions depends on funcs in this script
 
 # read in simulation data ------------------------------------------------------
-sim_file_path <- "data/"
+sim_file_path <- "data/plume_sim/"
 plume_type <- "complex" # complex | mid | simple
 tmp_list <- lapply(
   grep(plume_type,
@@ -60,6 +60,8 @@ plume_long |>
   facet_wrap(vars(time_dbl)) +
   theme(panel.grid = element_blank())
 
+plume_data_long <- plume_long
+
 # all grid locations - data frame with two columns
 plume_xy <- plume_wide |> dplyr::select(x, y) 
 
@@ -67,7 +69,7 @@ plume_xy <- plume_wide |> dplyr::select(x, y)
 # run simulation ---------------------------------------------------------------
 
 # number of wells in the domain to use as observations
-well_interest <- 15 # 15, 30, 50 75, 100 but set 15 here for example
+well_interest <- c(30, 15) # 15, 30, 50 75, 100 but set 15 here for example
 
 k <- 1 # number of well networks to simulate
 d <- 1:k
@@ -83,7 +85,8 @@ for (j in iter_n_names) {
     tic("group", as.character(j))
     
     # creating groups of 8 for jth group
-    vec <- (j * 8 - 7):(j * 8) 
+    # vec <- (j * 8 - 7):(j * 8) 
+    vec <- 1
     
     # where to store results for contouring r&d
     file_path <- file.path("data")
@@ -98,7 +101,7 @@ for (j in iter_n_names) {
         plume_type = plume_type,
         plume_data_wide = plume_wide
       )
-      obj_name <- paste0("sim_", plume_type, "_df_", k,"_itergroup_", j)
+      obj_name <- paste0("test_sim_", plume_type, "_df_", k,"_itergroup_", j)
       assign(obj_name, sim_df)
       save(list = obj_name, file = paste0(file_path, "/", obj_name, ".RDS"))
 
