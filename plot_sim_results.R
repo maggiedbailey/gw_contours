@@ -135,7 +135,7 @@ view(perc_best)
 
 # Figure 3: contour example from each method -----------------------------------
 # load "true" data
-sim_file_path <- "data"
+sim_file_path <- "data/plume_sim"
 tmp_list <- lapply(
   grep(plume_type,
        list.files( sim_file_path, full.names = TRUE, pattern = "*.rds"),
@@ -158,14 +158,7 @@ z_lim <- range(plume_long$conc)
 
 # load result data -- manuscript has two sets of results, only one is plotted
 #   here as an example
-load("data/")
-str(pred_df_out)
-
-# subset to 10, 20, 30, 40 ts
-pred_subset <- pred_df_out %>%
-  filter(time %in% c("ts10", "ts20", "ts30", "ts40"))
-saveRDS(pred_subset, file = "complex_pred_plume_network_25_100_nwells_subset.RDS")
-
+pred_df_out <- readRDS("data/predictions_complex_plume.RDS")
 
 # select number of wells -- can be 15, 30, 50 75, or 100
 n_wells <- 100
@@ -212,7 +205,7 @@ pred_df_out %>%
 # example data is available for 100 wells only
 
 # load example result data directly from data folder
-df <- load_and_get_data("gw_contours/data/predictions_complex_plume.RDS")
+df <- readRDS("data/predictions_complex_plume.RDS")
 
 # get average, median, 5th, 95th contours by pixel -- these lines make take a minute to run
 df_fbplot <- df %>% 
